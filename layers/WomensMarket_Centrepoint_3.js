@@ -1,0 +1,1 @@
+var json_WomensMarket_Centrepoint_3 = {"type":"FeatureCollection","name":"WomensMarket_Centrepoint_3","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"Point":"Center","Latitude":-0.33081,"Longitude":42.56455},"geometry":{"type":"Point","coordinates":[42.5645,-0.3308]}}]}
