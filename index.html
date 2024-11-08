@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="./resources/ol.css">
@@ -12,37 +12,35 @@
         <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
         <link rel="stylesheet" href="./resources/qgis2web.css">
         <style>
-        html, body {
-            background-color: #ffffff;
-        }
-        .ol-control > * {
-            background-color: #f8f8f8!important;
-            color: #444444!important;
-            border-radius: 0px;
-        }
-        .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
-            color: #444444!important;
-        }
-        .search-layer-input-search {
-            background-color: #f8f8f8!important;
-        }
-        .ol-control > *:focus, .ol-control >*:hover {
-            background-color: rgba(248, 248, 248, 0.7)!important;
-        } 
-        .ol-control {
-            background-color: rgba(255,255,255,.4) !important;
-            padding: 2px !important;
-        } 
+            html, body {
+                background-color: #ffffff;
+                margin: 0;
+                padding: 0;
+            }
+            .ol-control > * {
+                background-color: #f8f8f8!important;
+                color: #444444!important;
+                border-radius: 0px;
+            }
+            .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
+                color: #444444!important;
+            }
+            .search-layer-input-search {
+                background-color: #f8f8f8!important;
+            }
+            .ol-control > *:focus, .ol-control > *:hover {
+                background-color: rgba(248, 248, 248, 0.7)!important;
+            } 
+            .ol-control {
+                background-color: rgba(255,255,255,.4) !important;
+                padding: 2px !important;
+            } 
+            #map {
+                width: 100%;
+                height: 100%;
+            }
         </style>
 
-        <style>
-        html, body, #map {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-        }
-        </style>
         <title>Dalxiska Women Market Beneficiaries Registration Guidance Map</title>
     </head>
     <body>
@@ -53,16 +51,68 @@
             </div>
         </div>
         <script src="resources/qgis2web_expressions.js"></script>
-<script src="resources/proj4.js"></script>
+        <script src="resources/proj4.js"></script>
         <script>proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');</script>
         <script src="./resources/functions.js"></script>
         <script src="./resources/ol.js"></script>
         <script src="./resources/ol-layerswitcher.js"></script>
         <script src="resources/ol-geocoder.js"></script>
-        <script src="layers/WomensMarketcornerpoints_2.js"></script><script src="layers/WomensMarket_Centrepoint_3.js"></script><script src="layers/District_Boundary_4.js"></script><script src="layers/Dalxiska_Women_Market_5.js"></script><script src="layers/2Km_buffer_Women_Market_6.js"></script><script src="layers/Dalxiska_IDP_Sites_7.js"></script>
-        <script src="styles/WomensMarketcornerpoints_2_style.js"></script><script src="styles/WomensMarket_Centrepoint_3_style.js"></script><script src="styles/District_Boundary_4_style.js"></script><script src="styles/Dalxiska_Women_Market_5_style.js"></script><script src="styles/2Km_buffer_Women_Market_6_style.js"></script><script src="styles/Dalxiska_IDP_Sites_7_style.js"></script>
+        <script src="layers/WomensMarketcornerpoints_2.js"></script>
+        <script src="layers/WomensMarket_Centrepoint_3.js"></script>
+        <script src="layers/District_Boundary_4.js"></script>
+        <script src="layers/Dalxiska_Women_Market_5.js"></script>
+        <script src="layers/2Km_buffer_Women_Market_6.js"></script>
+        <script src="layers/Dalxiska_IDP_Sites_7.js"></script>
+        <script src="styles/WomensMarketcornerpoints_2_style.js"></script>
+        <script src="styles/WomensMarket_Centrepoint_3_style.js"></script>
+        <script src="styles/District_Boundary_4_style.js"></script>
+        <script src="styles/Dalxiska_Women_Market_5_style.js"></script>
+        <script src="styles/2Km_buffer_Women_Market_6_style.js"></script>
+        <script src="styles/Dalxiska_IDP_Sites_7_style.js"></script>
         <script src="./layers/layers.js" type="text/javascript"></script> 
         <script src="./resources/Autolinker.min.js"></script>
         <script src="./resources/qgis2web.js"></script>
+
+        <script>
+            // Check if geolocation is available and enable the geolocation functionality
+            if (navigator.geolocation) {
+                // Create a geolocation button
+                var geolocateControl = new ol.control.Control({
+                    element: document.createElement('button')
+                });
+
+                // Add a listener for the geolocation button click event
+                geolocateControl.element.innerHTML = "🌍"; // icon to represent geolocation button
+                geolocateControl.element.style.position = "absolute";
+                geolocateControl.element.style.top = "10px";
+                geolocateControl.element.style.right = "10px";
+                geolocateControl.element.style.zIndex = 9999;
+                geolocateControl.element.style.fontSize = "20px";
+                geolocateControl.element.style.padding = "10px";
+                geolocateControl.element.style.border = "none";
+                geolocateControl.element.style.backgroundColor = "rgba(255,255,255,0.8)";
+                geolocateControl.element.style.borderRadius = "50%";
+
+                // Add geolocation control to the map
+                map.addControl(geolocateControl);
+
+                // Function to center map at the user's location
+                function geolocate() {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var coords = position.coords;
+                        var userLocation = ol.proj.fromLonLat([coords.longitude, coords.latitude]);
+
+                        // Move the map to the user's location
+                        map.getView().setCenter(userLocation);
+                        map.getView().setZoom(15); // zoom level when user location is found
+                    });
+                }
+
+                // Add event listener for geolocation button click
+                geolocateControl.element.addEventListener('click', geolocate);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        </script>
     </body>
 </html>
